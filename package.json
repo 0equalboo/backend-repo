@@ -10,5 +10,8 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "type" : "module"
+  "type": "module",
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
 }
