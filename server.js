@@ -1,5 +1,5 @@
 import express from 'express';
-import UserRouter  from "./router/user.js";
+// import UserRouter  from "./router/user.js";
 import mongoose from "mongoose";
 import AuthRouter from "./router/auth.js";
 
@@ -15,7 +15,7 @@ server.use(bodyParser.urlencoded({ extended: false }));
 server.use(cors());
 server.use(bodyParser.json());
 server.use("/auth", AuthRouter);
-server.use("/user", UserRouter);
+// server.use("/user", UserRouter);
 
 
 server.get("/", (req, res) => {
