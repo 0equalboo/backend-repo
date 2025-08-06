@@ -1,6 +1,8 @@
 import express from 'express';
 import UserRouter  from "./router/user.js";
 import mongoose from "mongoose";
+import AuthRouter from "./router/auth.js";
+
 
 const server = express();
 const port = 4000
@@ -13,6 +15,7 @@ server.use(bodyParser.urlencoded({ extended: false }));
 server.use(cors());
 server.use(bodyParser.json());
 server.use("/auth", AuthRouter);
+server.use("/user", UserRouter);
 
 
 server.get("/", (req, res) => {
