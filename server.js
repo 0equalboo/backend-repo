@@ -2,7 +2,8 @@ import express from 'express';
 // import UserRouter  from "./router/user.js";
 import mongoose from "mongoose";
 import AuthRouter from "./router/auth.js";
-
+import 'dotenv/config'; // .env 내용을 읽기 위해 import
+import "./db.js";      // DB 연결 코드를 실행하기 위해 import
 
 const server = express();
 const port = 4000
