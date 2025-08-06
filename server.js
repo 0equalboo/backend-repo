@@ -2,6 +2,7 @@ import express from 'express';
 // import UserRouter  from "./router/user.js";
 import mongoose from "mongoose";
 import AuthRouter from "./router/auth.js";
+import UserRouter from "./router/user.js";
 import 'dotenv/config'; // .env 내용을 읽기 위해 import
 import "./db.js";      // DB 연결 코드를 실행하기 위해 import
 
@@ -16,6 +17,7 @@ server.use(bodyParser.urlencoded({ extended: false }));
 server.use(cors());
 server.use(bodyParser.json());
 server.use("/auth", AuthRouter);
+server.use("/api/v1/users", UserRouter);
 // server.use("/user", UserRouter);
 
 
