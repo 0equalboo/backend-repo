@@ -1,3 +1,4 @@
+//router/auth.js
 import express from 'express';
 import { UserModel} from "../schema/user.js"; // <-- 이 줄 주석 처리
 import jwt from "jsonwebtoken";

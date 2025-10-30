@@ -1,4 +1,4 @@
-// middleware/upload-s3.js
+// middleware/upload.js
 
 import { S3Client } from '@aws-sdk/client-s3'; // v3 import
 import multer from 'multer';

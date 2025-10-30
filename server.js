@@ -1,3 +1,4 @@
+//server.js
 import 'dotenv/config';
 import express from 'express';
 
@@ -6,7 +7,6 @@ import UserRouter from "./router/user.js";
 import PostRouter from "./router/post.js";
 
 import "./db.js";
-import myLogger from './middleware/logger.js';
 import morgan from 'morgan';
 import cors from 'cors';
 // import cron from 'node-cron'; // 1. node-cron 불러오기
@@ -16,9 +16,8 @@ const server = express();
 const port = 4000;
 
 server.use(express.urlencoded({ extended: false }));
-server.use(cors());
+server.use(cors()); // <-- 이렇게 하면 모든 요청을 허용합니다. (개발 시 편리함)
 server.use(express.json());
-server.use(myLogger);
 server.use(morgan('dev'));
 
 server.use("/api/v1/auth", AuthRouter);
@@ -26,6 +25,12 @@ server.use("/api/v1/users", UserRouter);
 server.use("/api/v1/posts", PostRouter); 
 
 // ... (기존 API 라우트들) ...
+const corsOptions = {
+  origin: 'http://localhost:3000', // 프론트엔드 개발 서버 주소
+  // origin: 'https://your-frontend-domain.com' // 나중에 배포할 프론트엔드 도메인
+};
+server.use(cors(corsOptions));
+
 
 server.get("/health", (req,res)=> {
   res.status(200).json({status:"OK "});

@@ -14,6 +14,14 @@ const PostSchema = new mongoose.Schema({
         sub: { type: String }  // 소분류 (예: 이어폰)
     },
     status: { type: String, enum: ['보관중', '연락중', '완료'], default: '보관중' }, // 물품 상태
+    // fileUrl: {
+    //     type: String,
+    //     required: true,
+    // },
+    // faissId: {
+    //     type: Number,
+    //     index: true,
+    // },
 }, { timestamps: true }); // createdAt, updatedAt 자동 생성
 
 export const PostModel = mongoose.model("Post", PostSchema);

@@ -47,6 +47,63 @@ PostRouter.post("/", authMiddleware, async (req, res) => {
     }
 });
 
+PostRouter.put("/:id", authMiddleware, async (req, res) => {
+    try {
+        const postId = req.params.id; // 1. URL에서 수정할 게시글 ID 획득
+        const userId = req.user._id;     // 2. 인증 토큰에서 사용자 ID 획득
+
+        const post = await PostModel.findById(postId);
+
+        if (!post) {
+            return res.status(404).send("게시글을 찾을 수 없습니다.");
+        }
+
+        // 3. 본인 소유 게시글인지 확인
+        if (post.author.toString() !== userId.toString()) {
+            return res.status(403).send("수정 권한이 없습니다.");
+        }
+
+        // 4. (중요) req.body로 받은 새 정보로 업데이트
+        // { new: true } 옵션은 업데이트된 문서를 반환하라는 의미
+        const updatedPost = await PostModel.findByIdAndUpdate(
+            postId,
+            req.body, // { "title": "...", "content": "..." } 등 수정할 내용
+            { new: true }
+        );
+
+        return res.status(200).json(updatedPost);
+
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+});
+
+PostRouter.delete("/:id", authMiddleware, async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const userId = req.user._id;
+
+        const post = await PostModel.findById(postId);
+
+        if (!post) {
+            return res.status(404).send("게시글을 찾을 수 없습니다.");
+        }
+
+        // 1. 본인 소유 게시글인지 확인
+        if (post.author.toString() !== userId.toString()) {
+            return res.status(403).send("삭제 권한이 없습니다.");
+        }
+
+        // 2. 게시글 삭제 실행
+        await PostModel.findByIdAndDelete(postId);
+
+        return res.status(200).send({ message: "게시글이 성공적으로 삭제되었습니다." });
+
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+});
+
 /**
  * 전체 게시글 목록 조회 API
  */
