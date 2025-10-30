@@ -1,7 +1,7 @@
 import 'dotenv/config'; // .env 내용을 읽기 위해 import
 import express from 'express';
 // import UserRouter  from "./router/user.js";
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 import AuthRouter from "./router/auth.js";
 import UserRouter from "./router/user.js";
 import PostRouter from "./router/post.js"; // PostRouter 추가
