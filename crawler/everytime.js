@@ -28,15 +28,16 @@ export const runCrawler = async () => {
     await page.waitForSelector(searchResultSelector);
     await page.click(searchResultSelector);
 
-    const boardListPageUrl = 'https://everytime.kr/list';
+    const boardUrl = 'https://everytime.kr/377390';
     console.log('로그인 성공. 게시판 목록 페이지로 이동합니다...');
-    await page.goto(boardListPageUrl, { waitUntil: 'networkidle2' }); // 페이지 로드를 기다림
+    await page.goto(boardUrl, { waitUntil: 'networkidle2' }); // 페이지 로드를 기다림
 
     // --- 2. (수정됨) 이제 '분실물 게시판' 링크를 찾아 클릭 ---
-    const boardLinkSelector = 'a[data-id="377390"]'; // 분실물 게시판
-    console.log(`분실물 게시판 링크(${boardLinkSelector})를 찾는 중...`);
-    await page.waitForSelector(boardLinkSelector); // 이제 이 링크를 찾을 수 있습니다.
-    await page.click(boardLinkSelector);
+    // const boardLinkSelector = 'a[data-id="377390"]'; // 분실물 게시판
+    
+    // console.log(`분실물 게시판 링크(${boardLinkSelector})를 찾는 중...`);
+    // await page.waitForSelector(boardLinkSelector); // 이제 이 링크를 찾을 수 있습니다.
+    // await page.click(boardLinkSelector);
     
     // --- 3. 게시물 크롤링 시작 ---
     const postSelector = 'article';
