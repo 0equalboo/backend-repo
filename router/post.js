@@ -4,7 +4,7 @@
 import express from 'express';
 import { PostModel } from '../schema/post.js';
 import { authMiddleware } from '../middleware/auth.js';
-import uploadS3 from '../middleware/upload-s3.js'; // S3 업로드용 미들웨어만 가져옵니다.
+import uploadS3 from '../middleware/upload.js'; // S3 업로드용 미들웨어만 가져옵니다.
 
 const PostRouter = express.Router();
 
