@@ -28,9 +28,16 @@ export const runCrawler = async () => {
     await page.waitForSelector(searchResultSelector);
     await page.click(searchResultSelector);
 
-    const boardUrl = 'https://everytime.kr/377390';
-    console.log('로그인 성공. 게시판 목록 페이지로 이동합니다...');
-    await page.goto(boardUrl, { waitUntil: 'networkidle2' }); // 페이지 로드를 기다림
+    const boardLinkSelector = 'a[data-id="377390"]';
+  await page.waitForSelector(boardLinkSelector); // 링크가 나타날 때까지 기다립니다.
+
+  await page.click(boardLinkSelector);
+
+  const postSelector = 'article'; // 실제 게시물 선택자로 변경
+
+
+
+  await page.waitForSelector(postSelector, { visible: true });
 
     // --- 2. (수정됨) 이제 '분실물 게시판' 링크를 찾아 클릭 ---
     // const boardLinkSelector = 'a[data-id="377390"]'; // 분실물 게시판
@@ -40,7 +47,7 @@ export const runCrawler = async () => {
     // await page.click(boardLinkSelector);
     
     // --- 3. 게시물 크롤링 시작 ---
-    const postSelector = 'article';
+    // const postSelector = 'article';
     await page.waitForSelector(postSelector, { visible: true });
 
     // --- 2. 게시물 크롤링 시작 ---
