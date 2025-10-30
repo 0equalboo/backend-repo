@@ -34,7 +34,17 @@ server.get("/health", (req,res)=> {
 server.get("/", (req, res) => {
   res.send("Hello World!");
 });
+server.post("/text", (req, res) => {  //데이터 받는 곳
+  // req
+  const text1 = req.body.inText;
+  console.log(text1);
 
+  // res
+  const sendText = {
+  	text : "전송 성공!!!",
+  };
+  res.send(sendText);
+});
 server.listen(port, '0.0.0.0', () => { // 0.0.0.0으로 변경된 것 확인
   console.log(`Server listing on port ${port}`);
 
