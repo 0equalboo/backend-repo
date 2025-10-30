@@ -28,7 +28,7 @@ export const runCrawler = async () => {
     await page.waitForSelector(searchResultSelector);
     await page.click(searchResultSelector);
 
-    await page.waitForNavigation();
+    // await page.waitForNavigation();
     console.log('로그인 성공:', await page.title());
 
     // --- 1. 게시판으로 이동 ---
