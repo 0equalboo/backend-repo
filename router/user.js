@@ -1,7 +1,7 @@
 // router/user.js
 import express from 'express';
 import { UserModel } from '../schema/user.js';
-
+import { authMiddleware } from '../middleware/auth.js';
 const UserRouter = express.Router();
 
 // 회원가입 API
