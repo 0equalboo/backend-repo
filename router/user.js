@@ -1,10 +1,12 @@
-// router/user.js
+//router/user.js
+
 import express from 'express';
 import { UserModel } from '../schema/user.js';
 import { authMiddleware } from '../middleware/auth.js';
+
 const UserRouter = express.Router();
 
-// 회원가입 API
+// 회원가입 API (POST /api/v1/users/signup)
 UserRouter.post("/signup", async (req, res) => {
     try {
         const newUser = await UserModel.create(req.body);
@@ -15,27 +17,18 @@ UserRouter.post("/signup", async (req, res) => {
     }
 });
 
-UserRouter.put("/me", authMiddleware, async (req, res) => {
-    try {
-        const userId = req.user._id; // 1. authMiddleware가 찾아준 내 ID
-        const updateInfo = req.body; // 2. 수정할 정보 (예: { "nickname": "..." })
-
-        // 3. 비밀번호나 학번 같은 민감한 정보는 수정 못하게 막기 (선택 사항)
-        if (updateInfo.password || updateInfo.studentId) {
-            return res.status(400).send("비밀번호나 학번은 변경할 수 없습니다.");
-        }
-
-        const updatedUser = await UserModel.findByIdAndUpdate(
-            userId,
-            updateInfo,
-            { new: true }
-        ).select('-password'); // 4. 비밀번호를 제외하고 반환
-
-        return res.status(200).json(updatedUser);
-
-    } catch (error) {
-        return res.status(500).send(error.message);
+// 내 정보 확인 API (GET /api/v1/users/me)
+UserRouter.get("/me", authMiddleware, async (req, res) => {
+  try {
+    // authMiddleware가 req.user에 넣어준 사용자 정보를 반환 (비밀번호 제외)
+    const user = await UserModel.findById(req.user._id).select('-password');
+    if (!user) {
+      return res.status(404).send("사용자를 찾을 수 없습니다.");
     }
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
 });
 
 export default UserRouter;
