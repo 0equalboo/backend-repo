@@ -72,7 +72,7 @@ ChatRouter.get('/:roomId/messages', authMiddleware, async (req, res) => {
   }
 });
 
-router.get("/rooms", isAuth, async (req, res) => {
+ChatRouter.get("/rooms", isAuth, async (req, res) => {
   try {
     // (1) 내가 참여자(participants)로 포함된 방을 찾음
     // (2) participants 정보를 populate해서 닉네임 등을 가져옴
@@ -109,7 +109,7 @@ router.get("/rooms", isAuth, async (req, res) => {
 });
 
 // 2. 특정 채팅방 메시지 내역 가져오기 (GET /api/v1/chats/messages/:roomId)
-router.get("/messages/:roomId", isAuth, async (req, res) => {
+ChatRouter.get("/messages/:roomId", isAuth, async (req, res) => {
   const { roomId } = req.params;
 
   try {
@@ -127,4 +127,4 @@ router.get("/messages/:roomId", isAuth, async (req, res) => {
   }
 });
 
-export default router;
+export default ChatRouter;
