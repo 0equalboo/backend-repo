@@ -31,6 +31,16 @@ PostRouter.post("/", authMiddleware, uploadS3.single('image'), async (req, res) 
     }
 });
 
+router.get("/my", authMiddleware, async (req, res) => {
+  try {
+    const posts = await PostModel.find({ author: req.user._id })
+      .sort({ createdAt: -1 }); // 최신순
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: "내 글 불러오기 실패" });
+  }
+});
+
 /**
  * (수정) 전체 게시글 목록 조회 API (페이지네이션/필터링 적용)
  * GET /api/v1/posts
