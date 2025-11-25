@@ -34,6 +34,8 @@ const PostSchema = new mongoose.Schema({
     //   type: Number,
     //   index: true,
     // },
+    // -1은 "벡터 없음"을 의미하도록 초기화
+    faissId: { type: Number, default: -1 },
 
 }, { timestamps: true }); // createdAt, updatedAt 자동 생성
 
