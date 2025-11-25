@@ -1,3 +1,4 @@
+//router/user.js
 import express from 'express';
 import { UserModel } from '../schema/user.js';
 // 미들웨어 이름 통일 (authMiddleware로 사용)
