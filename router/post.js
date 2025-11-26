@@ -9,7 +9,8 @@ import FormData from 'form-data'; // [추가] 파일 전송용
 import multer from 'multer';
 
 const uploadMemory = multer({ storage: multer.memoryStorage() });
-const AI_SERVER_URL = "https://unpenetrated-laurine-unmeasurably.ngrok-free.dev"; //수정
+// const AI_SERVER_URL = "https://unpenetrated-laurine-unmeasurably.ngrok-free.dev"; //수정
+AI_SERVER_URL = "http://54.252.236.224:5000";
 const PostRouter = express.Router();
 
 /**
