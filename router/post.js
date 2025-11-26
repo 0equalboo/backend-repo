@@ -236,4 +236,53 @@ PostRouter.post("/search/image", uploadMemory.single('image'), async (req, res) 
     }
 });
 
+// router/post.js
+
+/**
+ * [신규] 텍스트로 이미지 검색 API (AI)
+ * POST /api/v1/posts/search/text
+ * Body: { "query": "검정색 신발" }
+ */
+PostRouter.post("/search/text", async (req, res) => {
+    try {
+        const { query } = req.body;
+        
+        if (!query) return res.status(400).send("검색어가 없습니다.");
+
+        // 1. Python AI 서버에 텍스트 전송
+        const aiResponse = await axios.post(`${AI_SERVER_URL}/search-text`, {
+            query: query
+        });
+
+        const { faissIds, distances } = aiResponse.data;
+
+        if (!faissIds || faissIds.length === 0) {
+            return res.status(200).json([]);
+        }
+
+        // 2. DB 조회 (기존 이미지 검색 로직과 동일)
+        const posts = await PostModel.find({
+            faissId: { $in: faissIds }
+        }).populate("author", "nickname");
+
+        // 3. 순서 정렬 및 유사도 매핑
+        const sortedPosts = faissIds.map((id, index) => {
+            const post = posts.find(p => p.faissId === id);
+            if (post) {
+                return {
+                    ...post.toObject(),
+                    similarity: Math.round(distances[index] * 100)
+                };
+            }
+            return null;
+        }).filter(p => p !== null);
+
+        return res.status(200).json(sortedPosts);
+
+    } catch (error) {
+        console.error("AI 텍스트 검색 실패:", error.message);
+        return res.status(500).send("AI 검색 중 오류 발생");
+    }
+});
+
 export default PostRouter;
