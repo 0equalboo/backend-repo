@@ -114,12 +114,7 @@ server.post("/text", (req, res) => {
 
 // **수정 4: 서버 실행 코드 중복 제거**
 // (기존 코드의 맨 아래에 있던 server.listen은 삭제해야 합니다. httpServer.listen만 남겨두세요.)
-// httpServer.listen(port, '0.0.0.0', () => {
-//   console.log(`Server listing on port ${port}`);
-  
-//   // 크롤러 등 스케줄러 로직이 필요하다면 여기에 작성
-// });
-httpServer.listen(port,  () => {
+httpServer.listen(port, '0.0.0.0', () => {
   console.log(`Server listing on port ${port}`);
   
   // 크롤러 등 스케줄러 로직이 필요하다면 여기에 작성
